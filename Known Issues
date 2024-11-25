@@ -1,0 +1,9 @@
+Purchasing a Mana Potion does not add it to the inventory it does how ever show up
+in the Craft Materials Option as Arcane Shield.
+Nothing being purchased from the NPC Merchant gets added into the Inventory.
+Adding Materials as Admin, adds them to the inventory but potions crashes the game with this message:
+    if item_details["type"] == "potion":
+       ~~~~~~~~~~~~^^^^^^^^
+KeyError: 'type'
+
+I do believe this is because of the hardcoded Potion type.
