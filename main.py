@@ -89,10 +89,16 @@ class Hero:
                     # Spell with 'damage' and 'mana_cost'
                     elif "damage" in item:
                         print(f"{item['name']} - Damage: {item['damage']}, Mana Cost: {item['mana_cost']}")
+                    elif item.get("type") == "Recipe":
+                        required_materials = ", ".join([f"{mat} x{qty}" for mat, qty in item.get("required", {}).items() ])
+                        print(f"{item['name']} - Recipe: Requires {required_materials}")
+                        
                 elif isinstance(item, str) and item in items:
                     # Check if it's a potion or other type in the items dictionary
+                    
                     item_details = items[item]
-                    if item_details["type"] == "potion":
+                    item_type = item.details.get("type", "Unkown")
+                    if item_type == "potion":
                         effects = []
                         if "heal_amount" in item_details:
                             effects.append(f"Heals {item_details['heal_amount']} HP")

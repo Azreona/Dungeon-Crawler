@@ -87,6 +87,8 @@ def check_victory(hero, enemy):
         print(f"The {enemy.name} has been defeated!")
         if enemy.name in enemy.monster_types_1:
             hero.score += random.randint(32, 100)
+        elif enemy.name in enemy.monster_types_2:
+                hero
         
         if enemy.loot:
              print("You've found the following loot:")
