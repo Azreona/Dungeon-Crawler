@@ -44,7 +44,8 @@ def npc_merchant(hero):
     except (ValueError, IndexError):
         print("Invalid Choice. Please try again")
     
-    
+
+#def npc_
         
        
     

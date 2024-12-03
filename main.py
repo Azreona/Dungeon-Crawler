@@ -3,6 +3,10 @@ from combat_system import start_battle
 from items_list import items
 from weapons_list import status_effects
 import items_list 
+import Battle_arena
+from enemies_list import spawn_random_monster_level_1, spawn_random_monster_level_2
+import random
+import npc
 
 
 class StatusEffect:
@@ -79,6 +83,7 @@ class Hero:
 
         
         print("Inventory:")
+            
         
         if self.inventory:
             for item in self.inventory:
@@ -126,16 +131,18 @@ class Hero:
             print(f"{item['coins']} coins added. Total Coins: {self.coins}")
         else:
             self.inventory.append(item)
+    
+    #def remove_from_inventory(self, item):
+        #if isinstance(item, str) and item in Hero.inventory:
+            
+            
       
-    def collect_loot(self, loot_items):
-        
+    def collect_loot(self, loot_items): 
         for item in loot_items:
             self.add_to_inventory(item)
             
     def crafting_function(self, item_name):
-        """
-        Attempt to craft an item based on the recipe.
-        """
+        
         recipe = items_list.recipes.get(item_name)  # Reference the recipes dictionary THIS IS THE ORIGINAL WORKING
         
         #recipe = hero.inventory.items_list.recipes.get(item_name)
@@ -167,6 +174,50 @@ class Hero:
         if recipe_name not in self.discovered_recipes:
             self.inventory.append(recipe_name)
             print (f"{self.name} discovered the recipe for {recipe_name} ")
+            
+            
+            
+def character_information():
+
+    while True:
+        print("\nWhat would you like to do?")
+        print("1. Look around")
+        print("2. Engage")
+        print("3. Check inventory")
+        print("4. Use a potion")
+        print("5. Craft Items")
+        #print("6. Admin Options")
+        print("0. Exit the arena")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+        
+        
+        elif choice == "2":
+            
+        
+        elif choice == "3":
+            print("\nInventory:")
+            hero.show_inventory()
+        
+        elif choice == "4":
+            # Prompt for potion usage
+            potion_name = input("Enter the name of the potion you want to use: ")
+            hero.use_potion(potion_name)  # Use potion if available
+            
+        elif choice == "5":
+            items.list.crafting_menu(hero)
+            
+        elif choice == "0":
+            Battle_arena.admin_actions(hero)
+
+
+        elif choice == "7":
+            print("Exiting the arena. Goodbye!")
+            break
+        
+        else:
+            print("Invalid choice. Please select 1, 2, 3, 4, or 5.")
       
 
 def create_hero():
@@ -194,3 +245,38 @@ def create_hero():
     hero = Hero(name, hero_class, hp,)
 
     return hero
+
+def generate_room(room_number):
+    if room_number % 10 == 0 :
+        return 
+        print (f"You shiver in Fear as {boss["type"]} enters the dungeon")
+        print (f"{boss[description]}")
+    elif random.random() < 0.2:
+        return
+        npc_merchant()
+    else: 
+        enemy_count = random.randint(1, 3)
+        enemies = [spawn_random_monster_level_1() for _ in range(enemy_count)]
+        return {"type": "combat", "description": f"Combat Room {room_number}", "enemies": enemies}
+
+def start_game():
+       
+    
+
+if choice == "1":
+            # Start a battle with a randomly spawned level 1 monster
+            enemy = spawn_random_monster_level_1()
+            #print(f"\nA wild {enemy.name} has appeared!")
+            
+            # Start the battle loop
+            start_battle(hero, enemy)
+            
+            # After the battle, if the hero survives, collect loot
+            if hero.hp > 0:
+                print("\nBattle complete!")
+                hero.show_inventory()  # Show updated inventory
+               
+            else:
+                print(f"{hero.name} has fallen in battle. Game over!")
+                print (f" Score: {hero.score}")
+                break

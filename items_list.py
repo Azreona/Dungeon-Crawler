@@ -2,17 +2,29 @@ import random
 
 
 items = {
-    "Health Potion": {"type": "potion", "heal_amount": 20},
-    "Rat Tail": {"type": "junk", "value": 1},
-    "Bone Shard": {"type": "junk", "value": 2},
+    
+    #Coins
     "Small Coin Purse": {"type": "currency", "coins": 10},
+    "Orcish Coin": {"type": "currency", "coins": 20},
+    "Medium Coin Purse": {"type": "currency", "coins": 15},
+    
+    #Potions
+    "Health Potion": {"type": "potion", "heal_amount": 20},
+    
+    #Material
     "Torn Cloth": {"type": "material", "value": 3},
     "Wolf Fang": {"type": "material", "value": 5},
-    "Orcish Coin": {"type": "currency", "coins": 20},
-    "Rotten Flesh": {"type": "junk", "value": 1},
     "Spider Silk": {"type": "material", "value": 8},
-    "Medium Coin Purse": {"type": "currency", "coins": 15},
+    
+    #Crafting Material
     "Empty Vial": {"Type": "Crafting Material"},
+    
+    #Weapons
+    
+    #Junk
+    "Rat Tail": {"type": "junk", "value": 1},
+    "Bone Shard": {"type": "junk", "value": 2},
+    "Rotten Flesh": {"type": "junk", "value": 1},
     
 }
 
