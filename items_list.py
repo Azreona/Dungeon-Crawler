@@ -65,5 +65,5 @@ def crafting_menu(hero):
 
 
 
-
+room_details
 

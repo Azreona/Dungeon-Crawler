@@ -177,7 +177,7 @@ class Hero:
             
             
             
-def character_information():
+def character_action():
 
     while True:
         print("\nWhat would you like to do?")
@@ -188,20 +188,45 @@ def character_information():
         print("5. Craft Items")
         #print("6. Admin Options")
         print("0. Exit the arena")
+        
         choice = input("Choose an option: ")
 
         if choice == "1":
+            print(f"You look around:{room_details['Description']}")
+            if room_details['type'] == "combat":
+                print(f" There are {len(room_details['enemies'])} enemies in the room.")
+                for enemy in room_details["enemies"]:
+                    print(f"- {enemy.name} (HO: {enemy.hp})")
+            elif room_details("type") == "merchant":
+                print("You spot a merchant in the corner, reay to trade.")
+            elif room_details("type") == "boss":
+                print("This room houses a formidable foe. Prepare yourself")
+            else:
+                print("The Room appears to be empty")
         
         
         elif choice == "2":
-            
+            # Engage with the room content
+            if room_details["type"] == "combat":
+                print("You prepare for battle!")
+                for enemy in room_details["enemies"]:
+                    start_battle(hero, enemy)
+            elif room_details["type"] == "merchant":
+                print("You approach the merchant to see their wares.")
+                npc.npc_merchant(hero)
+            elif room_details["type"] == "boss":
+                print("You face the boss in a challenging fight!")
+                # Add boss battle logic here
+            else:
+                print("Nothing to engage with here.")
+            break  # Exit the room loop after engaging
         
         elif choice == "3":
             print("\nInventory:")
             hero.show_inventory()
         
         elif choice == "4":
-            # Prompt for potion usage
+          
             potion_name = input("Enter the name of the potion you want to use: ")
             hero.use_potion(potion_name)  # Use potion if available
             
@@ -258,25 +283,8 @@ def generate_room(room_number):
         enemy_count = random.randint(1, 3)
         enemies = [spawn_random_monster_level_1() for _ in range(enemy_count)]
         return {"type": "combat", "description": f"Combat Room {room_number}", "enemies": enemies}
-
+    
+    
 def start_game():
        
     
-
-if choice == "1":
-            # Start a battle with a randomly spawned level 1 monster
-            enemy = spawn_random_monster_level_1()
-            #print(f"\nA wild {enemy.name} has appeared!")
-            
-            # Start the battle loop
-            start_battle(hero, enemy)
-            
-            # After the battle, if the hero survives, collect loot
-            if hero.hp > 0:
-                print("\nBattle complete!")
-                hero.show_inventory()  # Show updated inventory
-               
-            else:
-                print(f"{hero.name} has fallen in battle. Game over!")
-                print (f" Score: {hero.score}")
-                break
