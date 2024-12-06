@@ -3,7 +3,9 @@ from combat_system import start_battle
 from items_list import items
 from weapons_list import status_effects
 import items_list 
-import Battle_arena
+from items_list import get_random_combat_room, get_random_merchant_room, get_random_boss_room
+from items_list import room_details
+#import Battle_arena
 from enemies_list import spawn_random_monster_level_1, spawn_random_monster_level_2
 import random
 import npc
@@ -177,7 +179,7 @@ class Hero:
             
             
             
-def character_action():
+def character_action(hero, room_details):
 
     while True:
         print("\nWhat would you like to do?")
@@ -192,49 +194,27 @@ def character_action():
         choice = input("Choose an option: ")
 
         if choice == "1":
-            print(f"You look around:{room_details['Description']}")
-            if room_details['type'] == "combat":
-                print(f" There are {len(room_details['enemies'])} enemies in the room.")
-                for enemy in room_details["enemies"]:
-                    print(f"- {enemy.name} (HO: {enemy.hp})")
-            elif room_details("type") == "merchant":
-                print("You spot a merchant in the corner, reay to trade.")
-            elif room_details("type") == "boss":
-                print("This room houses a formidable foe. Prepare yourself")
-            else:
-                print("The Room appears to be empty")
+            character_choice_1(room_details)
         
         
         elif choice == "2":
-            # Engage with the room content
-            if room_details["type"] == "combat":
-                print("You prepare for battle!")
-                for enemy in room_details["enemies"]:
-                    start_battle(hero, enemy)
-            elif room_details["type"] == "merchant":
-                print("You approach the merchant to see their wares.")
-                npc.npc_merchant(hero)
-            elif room_details["type"] == "boss":
-                print("You face the boss in a challenging fight!")
-                # Add boss battle logic here
-            else:
-                print("Nothing to engage with here.")
-            break  # Exit the room loop after engaging
+                character_choice_2()
+                break
         
         elif choice == "3":
             print("\nInventory:")
-            hero.show_inventory()
+            Hero.show_inventory()
         
         elif choice == "4":
           
             potion_name = input("Enter the name of the potion you want to use: ")
-            hero.use_potion(potion_name)  # Use potion if available
+            Hero.use_potion(potion_name)  # Use potion if available
             
         elif choice == "5":
-            items.list.crafting_menu(hero)
+            items.list.crafting_menu(Hero)
             
         elif choice == "0":
-            Battle_arena.admin_actions(hero)
+            Battle_arena.admin_actions(Hero)
 
 
         elif choice == "7":
@@ -272,19 +252,95 @@ def create_hero():
     return hero
 
 def generate_room(room_number):
-    if room_number % 10 == 0 :
-        return 
-        print (f"You shiver in Fear as {boss["type"]} enters the dungeon")
-        print (f"{boss[description]}")
+    if room_number % 10 == 0:
+        return get_random_boss_room()
     elif random.random() < 0.2:
-        return
-        npc_merchant()
-    else: 
-        enemy_count = random.randint(1, 3)
-        enemies = [spawn_random_monster_level_1() for _ in range(enemy_count)]
-        return {"type": "combat", "description": f"Combat Room {room_number}", "enemies": enemies}
+        return get_random_merchant_room()
+    else:
+        return get_random_combat_room()
+
+def character_choice_1(room_details):
     
+    print(f"You look around:{room_details['description']}")
     
+    if room_details['type'] == "combat":
+        print(f" There are {len(room_details['enemies'])} enemies in the room.")
+    
+        for enemy in room_details["enemies"]:
+            print(f"- {enemy.name} (HO: {enemy.hp})")
+        
+    elif room_details["type"] == "merchant":
+        if "merchant_data" in room_details:
+            print("You spot a merchant in the corner, reay to trade.")
+        else: 
+            return
+        
+            
+  
+    elif room_details["type"] == "boss":
+        print("This room houses a formidable foe. Prepare yourself")
+ 
+    else:
+        print("The Room appears to be empty")    
+    
+def character_choice_2(room_details):
+                # Engage with the room content
+    if room_details["type"] == "combat":
+        print("You prepare for battle!")
+        for enemy in room_details["enemies"]:
+            start_battle(hero, enemy)
+            
+    elif room_details["type"] == "merchant":
+            print("You approach the merchant to see their wares.")
+            npc.npc_merchant(hero)
+            
+    elif room_details["type"] == "boss":
+        print("You face the boss in a challenging fight!")
+                # Add boss battle logic here
+    else:
+        print("Nothing to engage with here.")
+
+def dungeon_crawler(hero):
+    room_number = 1
+    while hero.hp > 0:  # Continue while the hero is alive
+        print(f"\nEntering Room {room_number}")
+        
+        # Generate the room details
+        room_details = generate_room(room_number)
+        print(f"You encounter: {room_details['description']}")
+        
+        # Call modular function to handle room interaction
+        character_action(hero, room_details)
+
+        room_number += 1  # Proceed to the next room
+
+
 def start_game():
+    print("Welcome to the Dungeon Crawler!")
+    print("Prepare your hero and explore the depths.")
+    print("Type 'exit' at any prompt to leave the game.")
+    
+    # Main menu
+    while True:
+        print("\n1. Start a New Game")
+        print("2. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            # Step 1: Create the hero
+            hero = create_hero()  # Use the existing `create_hero` function
+            
+            # Step 2: Start the dungeon crawler loop
+            print("\nYour adventure begins!")
+            dungeon_crawler(hero)  # Call the modular `dungeon_crawler` loop
+            
+        elif choice == "2":
+            print("Thank you for playing. Goodbye!")
+            break  # Exit the game loop
+        
+        else:
+            print("Invalid choice. Please choose 1 or 2.")
        
+start_game()
+
     

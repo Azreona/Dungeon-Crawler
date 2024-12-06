@@ -1,4 +1,5 @@
 import random
+import enemies_list
 
 
 items = {
@@ -64,6 +65,45 @@ def crafting_menu(hero):
     hero.crafting_function(item_to_craft)
 
 
+import random
 
-room_details
+def get_random_combat_room():
+    return random.choice(room_details ["combat_rooms"])
+
+def get_random_merchant_room():
+    return random.choice(room_details["merchant_rooms"])
+
+def get_random_boss_room():
+    return random.choice(room_details["boss_rooms"])
+
+
+
+
+room_details = {
+    "combat_rooms": [
+        {
+            "type": "combat",
+            "description": "A dimly lit corridor with strange markings on the walls.",
+            "enemy_pool": ["goblin", "wolf", "spider"]
+        },
+        {
+            "type": "combat",
+            "description": "An old armory with rusted weapons on the ground.",
+            "enemy_pool": ["skeleton", "zombie"]
+        }
+    ],
+    "merchant_rooms": [
+        {
+            "type": "merchant",
+            "description": "A small shop lit by a single candle, filled with odd trinkets."
+        }
+    ],
+    "boss_rooms": [
+        {
+            "type": "boss",
+            "description": "A grand hall adorned with tapestries and a looming figure at the far end."
+        }
+    ]
+}
+
 

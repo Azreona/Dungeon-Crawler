@@ -41,3 +41,9 @@ def spawn_random_monster_level_1():
     return monster_class()
 
 monster = spawn_random_monster_level_1()
+
+def spawn_random_monster_level_2():
+    monster_class = random.choice([monster_level_2])
+    return monster_class()
+
+monster = spawn_random_monster_level_2()
